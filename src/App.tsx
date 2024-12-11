@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import {useTodosState} from './store/TodosState'
+
 const url ="https://dummyjson.com/todos";
 interface DataTodo{
   completed: boolean;
@@ -10,6 +12,7 @@ interface DataTodo{
 export const App: React.FC = () => {
 
   const [todosList, setTodosList] = useState<Array<DataTodo>>([])
+  const todoState = useTodosState((state) => state.todo)
 
   useEffect(()=>{
     const getTodos = async ()=>{
@@ -31,6 +34,7 @@ export const App: React.FC = () => {
         })
       }
     </ul>
+    <p>{todoState}</p>
     </>
   )
 }
