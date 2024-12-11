@@ -1,13 +1,36 @@
-import './App.css'
+import React, { useEffect, useState } from "react"
+const url ="https://dummyjson.com/todos";
+interface DataTodo{
+  completed: boolean;
+  id: number;
+  todo: string;
+  userId:number;
+}
 
-function App() {
+export const App: React.FC = () => {
 
+  const [todosList, setTodosList] = useState<Array<DataTodo>>([])
 
+  useEffect(()=>{
+    const getTodos = async ()=>{
+      const data = await fetch(url);
+      const response = await data.json();
+      setTodosList(response.todos);
+    }
+    getTodos()
+  }, [])
+  console.log(todosList)
   return (
     <>
-        <h1>hola</h1>
+    <ul>
+      {
+        todosList.map((todo)=>{
+          return(
+            <li key={todo.id}>{todo.todo}</li>
+          )
+        })
+      }
+    </ul>
     </>
   )
 }
-
-export default App
